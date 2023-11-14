@@ -87,7 +87,14 @@ function show (req, res) {
     </div>
     <p>${post.body}</p>
     <span>${post.tags.join(", ")}</span>
-    <a style='font-weight: bold; display: block; padding: 1rem 0;' href="/posts">Torna alla lista dei post</a>`;
+    <form action="/api/delete/${post.id}" method="POST">
+    <input type="hidden" name="id" value="${post.id}">
+        <input style='margin: 1rem 0;' type="submit" value="Cancella questo post">
+    </form>
+    <a style='font-weight: bold; display: block; padding: 1rem 0;' href="/posts">Torna alla lista dei post</a>
+    
+    
+    `;
 
     res.send(html)
 }
