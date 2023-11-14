@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const env = require("dotenv").config();
+const Post = require("../lib/Post");
 
 const port = process.env.PORT ?? "";
 const host = process.env.HOST.includes("localhost")
@@ -44,7 +45,30 @@ function show(req, res) {
   });
 }
 
+function store (req, res) {
+  
+  const lastId = posts.map((post) => post.id).sort().reverse()[0]
+
+  const data = req.body
+  const tags = data.tags.split(",").map((tag) => tag.trim())
+
+  const newPost = new Post(
+    lastId + 1, 
+    data.title, 
+    data.content,
+    tags,
+    'image.jpg',
+    )
+
+    posts.push(newPost)
+    fs.writeFileSync(path.resolve("./db/posts.json"), JSON.stringify(posts, null, 2))
+
+    res.status(300).redirect(`/posts/${newPost.id}`)
+  
+}
+
 module.exports = {
   index,
   show,
+  store
 };

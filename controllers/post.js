@@ -11,12 +11,12 @@ const host = process.env.HOST.includes('localhost') ? 'localhost' : ('https://' 
  */
 
 function index (req, res) {
-    const posts = JSON.parse(fs.readFileSync(path.resolve("./db/posts.json"), "utf8"))
+    const posts = JSON.parse(fs.readFileSync(path.resolve("./db/posts.json"), "utf8")).sort((a, b) => b.id - a.id)
     if(!posts){
         res.status(404).send("Not found")
         return
     }
-    const html = ['<ul>']
+    const html = ['<a href="/">Torna alla home</a>', '<ul>']
 
     html.push(posts.map(
           (post) => 
@@ -33,7 +33,7 @@ function index (req, res) {
 
     
     html.push('</ul>')
-    html.push('<a href="/">Torna alla home</a>')
+   
     
     res.format({
         text: () => {
@@ -61,7 +61,7 @@ function show (req, res) {
         return
     }
     
-    const post = posts.find(post => post.id === req.params.id)
+    const post = posts.find(post => post.id == req.params.id)
     if (!post) {
         res.status(404).send({error: 404, message: `Post with id ${req.params.id} not found`})
         return
@@ -100,7 +100,7 @@ function show (req, res) {
 function create (req, res) {
     res.format({
         html: () => {
-            res.send(`<h1>Creazione nuovo post</h1>`)
+            res.sendFile(path.resolve("./components/form.html"))
         },
         default: () => {
             res.status(406).send("Not Acceptable")
@@ -108,6 +108,10 @@ function create (req, res) {
     }
     )
     
+}
+
+function store (req, res) {
+    console.log(req.body)
 }
 
 /**
@@ -127,5 +131,6 @@ module.exports = {
     index,
     show,
     create,
-    download
+    download,
+    store
   }

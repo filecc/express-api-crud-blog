@@ -1,0 +1,22 @@
+<form action="/api/post/add" method="POST">
+    <label for="title">Title</label>
+    <br>
+    <input placeholder="Insert a title" name="title" type="text" required>
+    <br>
+    <label for="body">Content</label>
+    <br>
+    <textarea placeholder="Insert a content" name="content" id="body" cols="30" rows="10" required></textarea>
+    <br>
+    <label for="tags">Tags</label>
+    <br>
+    <input type="text" name="tags" placeholder="Insert tags (comma separated)" required>
+    <br>
+    <label for="image">Image</label>
+    <br>
+    <input type="file" name="image" placeholder="Insert an image" required>
+    <br>
+    <br>
+    <button type="submit">Post</button>
+    <br><br>
+    <a href="/">Vai alla Home</a>
+</form>
