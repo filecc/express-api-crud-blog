@@ -52,7 +52,13 @@ function store (req, res) {
   const data = req.body
   const tags = data.tags.split(",").map((tag) => tag.trim())
 
-  const imageSlug = '/'+ req.file.filename + '.jpg'
+  let imageSlug;
+
+  if(req.file){
+    imageSlug = '/'+ req.file.filename + '.jpg'
+    fs.renameSync(req.file.path, path.resolve(`./public/images${imageSlug}`))
+  }
+
 
   const newPost = new Post(
     lastId + 1, 
@@ -65,8 +71,6 @@ function store (req, res) {
     posts.push(newPost)
 
     fs.writeFileSync(path.resolve("./db/posts.json"), JSON.stringify(posts, null, 2))
-    fs.renameSync(req.file.path, path.resolve(`./public/images${imageSlug}`))
-    
 
     res.status(300).redirect(`/posts/${newPost.id}`)
   
