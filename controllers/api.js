@@ -46,7 +46,7 @@ function show(req, res) {
 }
 
 function store (req, res) {
-  console.log(req.file)
+
   const lastId = posts.map((post) => post.id).sort().reverse()[0]
 
   const data = req.body
