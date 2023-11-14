@@ -28,7 +28,7 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  const post = posts.find((post) => post.id === req.params.id);
+  const post = posts.find((post) => post.id == req.params.id);
 
   if (!post) {
     res
@@ -46,22 +46,27 @@ function show(req, res) {
 }
 
 function store (req, res) {
-  
+  console.log(req.file)
   const lastId = posts.map((post) => post.id).sort().reverse()[0]
 
   const data = req.body
   const tags = data.tags.split(",").map((tag) => tag.trim())
+
+  const imageSlug = '/'+ req.file.filename + '.jpg'
 
   const newPost = new Post(
     lastId + 1, 
     data.title, 
     data.content,
     tags,
-    'image.jpg',
+    imageSlug,
     )
 
     posts.push(newPost)
+
     fs.writeFileSync(path.resolve("./db/posts.json"), JSON.stringify(posts, null, 2))
+    fs.renameSync(req.file.path, path.resolve(`./public/images${imageSlug}`))
+    
 
     res.status(300).redirect(`/posts/${newPost.id}`)
   

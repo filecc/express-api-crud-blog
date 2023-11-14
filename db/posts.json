@@ -56,5 +56,16 @@
       "tag3",
       "tag4"
     ]
+  },
+  {
+    "id": 6,
+    "title": "Sulle sponde del fiume",
+    "slug": "sulle-sponde-del-fiume",
+    "body": "Mi sono seduta e ho pianto",
+    "tags": [
+      "fiume",
+      "pianto"
+    ],
+    "image": "/ae8aa0c76a1555c6134a440bceda639c.jpg"
   }
 ]
