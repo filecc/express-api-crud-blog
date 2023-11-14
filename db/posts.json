@@ -56,5 +56,16 @@
       "tag3",
       "tag4"
     ]
+  },
+  {
+    "id": 6,
+    "title": "Un nuovo inizio",
+    "slug": "un-nuovo-inizio",
+    "body": "Il contenuto appena caricato",
+    "tags": [
+      "express",
+      "node"
+    ],
+    "image": "/a29782d6bf9f18efa896a56243e4b7cc.jpg"
   }
 ]
