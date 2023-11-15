@@ -65,7 +65,7 @@ function store (req, res) {
     data.title, 
     data.content,
     tags,
-    imageSlug,
+    imageSlug ?? '/placeholder.webp',
     )
 
     posts.push(newPost)
@@ -83,7 +83,11 @@ function destroy(req, res) {
     res.status(404).json({error: 404, message: `Post with id ${id} not found`})
     return
   }
-  fs.unlinkSync(path.resolve(`./public/images/${posts[postIndex].image}`))
+  if(posts[postIndex].image !== '/placeholder.webp')
+  {
+    fs.unlinkSync(path.resolve(`./public/images/${posts[postIndex].image}`))
+  }
+  
   posts.splice(postIndex, 1)
   fs.writeFileSync(path.resolve("./db/posts.json"), JSON.stringify(posts, null, 2))
   
